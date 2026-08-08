@@ -82,7 +82,7 @@
 - **MySQL MCP**: 自动化数据库 Schema 执行与数据验证
 - **Custom Skills**: 需求/原型解析工具 & 自动化测试集成
 
-页面展示：
+
 <img width="1280" height="594" alt="1" src="https://github.com/user-attachments/assets/58dd3f40-d64b-45e9-bc04-94f0cb5f291d" />
 <img width="1280" height="591" alt="2" src="https://github.com/user-attachments/assets/d383078c-9783-4c47-be7d-ce32399cba9a" />
 <img width="1280" height="595" alt="3" src="https://github.com/user-attachments/assets/e882e642-1127-48d2-ba3e-ea86bc9de887" />
@@ -90,8 +90,6 @@
 <img width="1280" height="593" alt="5" src="https://github.com/user-attachments/assets/71c66a82-fe5a-438b-9fab-e3fecd2a517c" />
 <img width="1277" height="593" alt="6" src="https://github.com/user-attachments/assets/eb39c8c1-6599-4a2a-8c1d-4a4abb7daa34" />
 <img width="1280" height="592" alt="7" src="https://github.com/user-attachments/assets/293506a0-6531-4443-be30-d3c660bc443c" />
-<br>
-webapp-testing测试结果：
 <img width="740" height="641" alt="8" src="https://github.com/user-attachments/assets/f9681ecb-46cb-44f7-b3c4-553bab3c5060" />
 
 
