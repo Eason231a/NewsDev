@@ -34,6 +34,36 @@
 
 ---
 
+## 🐛 踩坑记录与解决方案 (Troubleshooting & Solutions)
+
+在 **AI Native 全栈开发** 的实践过程中，虽然 AI 工具大幅提升了研发效率，但在数据契约与接口推导上也遇到了一些典型问题，以下是具体的踩坑与应对策略：
+
+### 1. AI 推导数据表字段类型不匹配 (Data Type Mismatch)
+* **问题描述**：在使用 Custom Skill 解析需求文档与原型自动推导数据库 Schema 时，AI 对状态码（如文章审核状态）、枚举值、时间戳格式以及高精度数字（如阅读量统计、金额）的类型推导不够精准，导致前后端联调时发生类型转换报错。
+* **解决方案**：在 Custom Skill 的 Prompt 中注入严格的**类型映射字典规范**（例如：强行约束所有状态码映射为 `TINYINT`，时间统一为 `DATETIME`/`TIMESTAMP`）；同时在生成 Postman Collection 时增加针对数据类型的断言测试，在联调前先进行自动化 Schema 动态校验。
+
+### 2. JSON 接口契约与 Postman Mock 数据结构差异 (API Contract Discrepancy)
+* **问题描述**：`database-schema-designer` 基于库表生成接口规范（JSON）时，在处理分页数据、嵌套对象以及统一响应体（如 `Result<T>`）时结构不够统一，导致 Postman 生成的 Mock 数据与前端期望的接收格式产生偏差。
+* **解决方案**：建立项目级通用的 `ResponseResult` 泛型响应结构文档，约束 AI 工具在生成 JSON 契约时必须严格遵循统一的顶层数据结构（`code`, `msg`, `data`）；并在 Postman 中加入 Pre-request Script 拦截器进行契约结构校验，确保 Mock 数据的准确性。
+
+### 3. 全局规范约束失效与代码幻觉 (Global Constraints via `CLAUDE.md`)
+* **问题描述**：在使用 Claude Code 进行跨模块、多文件的代码生成时，随着上下文（Context）逐渐膨胀，AI 容易忽略初始设定（如目录规范、组件命名规范、异常处理机制），甚至出现伪代码占位（如 `// ...其余代码保持不变`）的情况。
+* **解决方案**：在项目根目录下引入 **`CLAUDE.md`** 作为 AI 的全局运行法则。在其中明确规定：代码规范、禁止使用伪代码占位、错误处理标准以及项目的目录结构。借助 Claude Code 会优先读取 `CLAUDE.md` 的特性，强制约束每一次上下文调用的输出质量，有效杜绝了代码幻觉与规范偏离。
+
+---
+
+## 🚧 未解决问题与后续规划 (Known Issues & Roadmap)
+
+* **AI 生成代码的重构与性能优化 (Code Refactoring & Performance)**
+  * **现状**：当前由 AI 辅助生成的后端 SQL 查询与业务逻辑代码主要以**快速实现功能与满足业务逻辑**为主，在海量数据或高并发场景下的性能表现尚缺乏测试验证。
+  * **后续规划**：后续计划引入慢查询日志分析，对数据库索引（如建立复合索引）进行专项优化；同时对核心热点接口引入 Redis 缓存层，并重构部分冗余的业务逻辑代码，提升系统高并发下的响应性能。
+
+* **更精细化的权限管理架构 (Refined RBAC & Data Authority)**
+  * **现状**：目前项目的权限控制满足基础角色区分（如普通用户、创作者、管理员），但在动态按钮级权限控制与细粒度的数据隔离（如创作者仅可编辑/删除自己所属的文章与草稿）方面仍有提升空间。
+  * **后续规划**：计划引入基于 **RBAC (Role-Based Access Control)** 模型的动态权限框架，重构前端菜单路由鉴权与后端 Data-level 权限拦截器，实现灵活的按钮级别与数据级别的访问控制。
+
+---
+
 ## 📂 项目关键文档 (Artifacts)
 
 | 文档名称 | 说明 | 对应工具 / 阶段 |
@@ -52,7 +82,7 @@
 - **MySQL MCP**: 自动化数据库 Schema 执行与数据验证
 - **Custom Skills**: 需求/原型解析工具 & 自动化测试集成
 
-
+页面展示：
 <img width="1280" height="594" alt="1" src="https://github.com/user-attachments/assets/58dd3f40-d64b-45e9-bc04-94f0cb5f291d" />
 <img width="1280" height="591" alt="2" src="https://github.com/user-attachments/assets/d383078c-9783-4c47-be7d-ce32399cba9a" />
 <img width="1280" height="595" alt="3" src="https://github.com/user-attachments/assets/e882e642-1127-48d2-ba3e-ea86bc9de887" />
@@ -60,6 +90,7 @@
 <img width="1280" height="593" alt="5" src="https://github.com/user-attachments/assets/71c66a82-fe5a-438b-9fab-e3fecd2a517c" />
 <img width="1277" height="593" alt="6" src="https://github.com/user-attachments/assets/eb39c8c1-6599-4a2a-8c1d-4a4abb7daa34" />
 <img width="1280" height="592" alt="7" src="https://github.com/user-attachments/assets/293506a0-6531-4443-be30-d3c660bc443c" />
+webapp-testing测试结果：
 <img width="740" height="641" alt="8" src="https://github.com/user-attachments/assets/f9681ecb-46cb-44f7-b3c4-553bab3c5060" />
 
 
