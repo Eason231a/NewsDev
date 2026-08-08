@@ -1,0 +1,30 @@
+{
+  "name": "leadnews-frontend",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "type-check": "vue-tsc -b --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "pinia": "^2.3.1",
+    "axios": "^1.10.0",
+    "element-plus": "^2.14.0",
+    "@vueup/vue-quill": "^1.5.5",
+    "dayjs": "^1.11.13",
+    "echarts": "^5.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.4",
+    "typescript": "~5.7.3",
+    "vite": "^6.3.0",
+    "vue-tsc": "^2.2.8",
+    "sass": "^1.86.3",
+    "@types/node": "^22.15.3"
+  }
+}

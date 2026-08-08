@@ -1,0 +1,3656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑马头条 - 产品原型图</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+        .header { background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%); color: white; padding: 40px 20px; text-align: center; }
+        .header h1 { font-size: 36px; margin-bottom: 10px; }
+        .header p { font-size: 18px; opacity: 0.9; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .section { margin-bottom: 60px; }
+        .section-title { font-size: 24px; color: #1890ff; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1890ff; }
+        .page-card { background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; margin-bottom: 30px; max-width: 2554px; margin-left: auto; margin-right: auto; }
+        .page-card-header { background: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #eee; display: flex; align-items: center; gap: 10px; }
+        .page-card-header .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .page-card-header .dot.red { background: #ff4d4f; }
+        .page-card-header .dot.yellow { background: #faad14; }
+        .page-card-header .dot.green { background: #52c41a; }
+        .page-card-header .page-name { font-weight: 600; color: #333; margin-left: 10px; }
+        .page-card-body { padding: 20px; aspect-ratio: 2554 / 1342; }
+        .wireframe { background: #f5f7fa; width: 100%; height: 100%; display: flex; overflow: hidden; }
+        
+        .wf-sidebar { 
+            width: 180px; 
+            min-width: 180px; 
+            background: #f5f7fa; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .wf-sidebar-logo { 
+            padding: 20px 16px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            border-bottom: 1px solid #e8e8e8; 
+        }
+        .wf-sidebar-logo .logo-icon { 
+            width: 32px; 
+            height: 32px; 
+            background: #1890ff; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 16px; 
+        }
+        .wf-sidebar-logo .logo-text { 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: #333; 
+        }
+        .wf-sidebar-menu { 
+            flex: 1; 
+            padding: 16px 0; 
+        }
+        .wf-sidebar-item { 
+            padding: 12px 24px; 
+            font-size: 14px; 
+            color: #666; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            cursor: pointer; 
+            border-radius: 0;
+            transition: all 0.2s;
+        }
+        .wf-sidebar-item:hover { 
+            background: #e6f7ff; 
+            color: #1890ff; 
+        }
+        .wf-sidebar-item.active { 
+            background: #1890ff; 
+            color: white; 
+            font-weight: 500;
+        }
+        .wf-sidebar-item .icon { 
+            width: 20px; 
+            height: 20px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        .wf-sidebar-user { 
+            padding: 16px; 
+            border-top: 1px solid #e8e8e8; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        .wf-sidebar-user .avatar { 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 50%; 
+            background: #d9d9d9; 
+        }
+        .wf-sidebar-user .username { 
+            font-size: 14px; 
+            color: #333; 
+        }
+        
+        .wf-main { 
+            flex: 1; 
+            background: white; 
+            border-radius: 12px 0 0 12px; 
+            margin: 10px 10px 10px 0; 
+            padding: 24px 32px; 
+            overflow: hidden; 
+        }
+        
+        .wf-topbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 24px; 
+        }
+        .wf-date-range { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 14px; 
+            color: #666; 
+        }
+        .wf-date-input { 
+            padding: 6px 12px; 
+            background: #f5f7fa; 
+            border: 1px solid #d9d9d9; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            color: #999; 
+        }
+        .wf-quick-date { 
+            display: flex; 
+            gap: 8px; 
+        }
+        .wf-quick-date span { 
+            padding: 6px 16px; 
+            background: #f5f7fa; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            color: #666; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .wf-quick-date span:hover {
+            color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-quick-date span.active { 
+            background: #1890ff; 
+            color: white; 
+        }
+        .wf-quick-date span.active:hover {
+            background: #40a9ff;
+            color: white;
+        }
+        
+        .wf-stat-cards { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px; 
+            margin-bottom: 24px; 
+        }
+        .wf-stat-card { 
+            background: #f5f7fa; 
+            border-radius: 8px; 
+            padding: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
+        .wf-stat-card .icon { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 24px; 
+        }
+        .wf-stat-card .info { 
+            flex: 1; 
+        }
+        .wf-stat-card .value { 
+            font-size: 28px; 
+            font-weight: 600; 
+            color: #333; 
+        }
+        .wf-stat-card .label { 
+            font-size: 14px; 
+            color: #999; 
+        }
+        .wf-stat-card.blue { background: #e6f7ff; }
+        .wf-stat-card.blue .icon { background: #1890ff; color: white; }
+        .wf-stat-card.blue .value { color: #1890ff; }
+        .wf-stat-card.green { background: #f6ffed; }
+        .wf-stat-card.green .icon { background: #52c41a; color: white; }
+        .wf-stat-card.green .value { color: #52c41a; }
+        .wf-stat-card.orange { background: #fff7e6; }
+        .wf-stat-card.orange .icon { background: #fa8c16; color: white; }
+        .wf-stat-card.orange .value { color: #fa8c16; }
+        .wf-stat-card.purple { background: #f9f0ff; }
+        .wf-stat-card.purple .icon { background: #722ed1; color: white; }
+        .wf-stat-card.purple .value { color: #722ed1; }
+        
+        .wf-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 14px; 
+        }
+        .wf-table th { 
+            background: #fafafa; 
+            padding: 12px 16px; 
+            text-align: left; 
+            border-bottom: 1px solid #e8e8e8; 
+            color: #666; 
+            font-weight: 500; 
+        }
+        .wf-table td { 
+            padding: 12px 16px; 
+            border-bottom: 1px solid #f0f0f0; 
+            color: #333; 
+        }
+        .wf-link { 
+            color: #1890ff; 
+            font-size: 14px; 
+            cursor: pointer; 
+        }
+        
+        .wf-pagination { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 8px; 
+            margin-top: 24px; 
+        }
+        .wf-page-btn { 
+            padding: 6px 12px; 
+            border-radius: 4px; 
+            background: #f5f7fa; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            color: #666; 
+            cursor: pointer; 
+        }
+        .wf-page-btn.active { 
+            background: #1890ff; 
+            color: white; 
+        }
+        
+        /* 上传图片弹窗样式 */
+        .upload-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .upload-modal-overlay.active {
+            display: flex;
+        }
+        .upload-modal {
+            background: white;
+            border-radius: 16px;
+            width: 520px;
+            max-width: 90vw;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        .upload-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .upload-modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1d2129;
+        }
+        .upload-modal-close {
+            font-size: 20px;
+            color: #86909c;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .upload-modal-close:hover {
+            background: #f2f3f5;
+            color: #1d2129;
+        }
+        .upload-modal-body {
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .upload-dropzone {
+            width: 200px;
+            height: 160px;
+            border: 2px dashed #d9d9d9;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #fafafa;
+            transition: all 0.3s;
+        }
+        .upload-dropzone:hover {
+            border-color: #1677ff;
+            background: #e6f4ff;
+        }
+        .upload-dropzone.has-file {
+            border-color: #52c41a;
+            background: #f6ffed;
+        }
+        .upload-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+        .upload-text {
+            font-size: 14px;
+            color: #86909c;
+        }
+        .upload-hint {
+            font-size: 13px;
+            color: #86909c;
+            margin-top: 16px;
+        }
+        .upload-progress {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .upload-progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f2f3f5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .upload-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1677ff, #4096ff);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .upload-progress-text {
+            display: block;
+            text-align: center;
+            font-size: 13px;
+            color: #1677ff;
+            margin-top: 8px;
+        }
+        .upload-start-btn {
+            margin-top: 24px;
+            padding: 10px 32px;
+            border-radius: 8px;
+            border: none;
+            background: #e5e6eb;
+            color: #86909c;
+            font-size: 14px;
+            cursor: not-allowed;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+        .upload-start-btn.active {
+            background: #1677ff;
+            color: white;
+            cursor: pointer;
+        }
+        .upload-start-btn.active:hover {
+            background: #4096ff;
+        }
+        .upload-start-icon {
+            font-size: 12px;
+        }
+        .upload-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 16px 24px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .upload-modal-btn {
+            padding: 8px 24px;
+            border-radius: 8px;
+            border: 1px solid #d9d9d9;
+            background: white;
+            color: #1d2129;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .upload-modal-btn:hover {
+            color: #1677ff;
+            border-color: #1677ff;
+        }
+        .upload-modal-btn.primary {
+            background: #1677ff;
+            color: white;
+            border-color: #1677ff;
+        }
+        .upload-modal-btn.primary:hover {
+            background: #4096ff;
+        }
+        
+        .wf-back { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 14px; 
+            color: #666; 
+            margin-bottom: 20px; 
+            cursor: pointer; 
+        }
+        
+        .wf-charts-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 32px; 
+            margin-top: 32px; 
+        }
+        .wf-chart-box { 
+            background: #fafafa; 
+            border-radius: 8px; 
+            padding: 24px; 
+        }
+        .wf-chart-box .chart-title { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #333; 
+            margin-bottom: 20px; 
+            padding-left: 12px; 
+            border-left: 3px solid #1890ff; 
+        }
+        .wf-donut { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            background: conic-gradient(#1890ff 0% 35%, #52c41a 35% 75%, #722ed1 75% 90%, #faad14 90% 100%); 
+            margin: 0 auto; 
+            position: relative; 
+        }
+        .wf-donut::after { 
+            content: ''; 
+            position: absolute; 
+            top: 35px; 
+            left: 35px; 
+            right: 35px; 
+            bottom: 35px; 
+            background: #fafafa; 
+            border-radius: 50%; 
+        }
+        .wf-legend { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            font-size: 13px; 
+            color: #666; 
+        }
+        .wf-legend-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .wf-legend-dot { 
+            width: 12px; 
+            height: 12px; 
+            border-radius: 2px; 
+        }
+        
+        .wf-note { 
+            background: #fffbe6; 
+            border: 1px solid #ffe58f; 
+            border-radius: 6px; 
+            padding: 12px 15px; 
+            font-size: 14px; 
+            color: #8c6d1f; 
+            margin-top: 10px; 
+        }
+        .wf-note strong { 
+            color: #614700; 
+        }
+        
+        .wf-editor-area { 
+            background: white; 
+            border: 1px solid #e8e8e8; 
+            border-radius: 4px; 
+            padding: 24px; 
+            min-height: 320px; 
+        }
+        .wf-editor-area .title-line { 
+            font-size: 18px; 
+            font-weight: 600; 
+            color: #333; 
+            margin-bottom: 20px; 
+            padding-bottom: 16px; 
+            border-bottom: 1px solid #f0f0f0; 
+        }
+        .wf-editor-area .content-line { 
+            font-size: 14px; 
+            color: #999; 
+            line-height: 1.8; 
+        }
+        
+        .wf-form-row { 
+            display: flex; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+            align-items: center; 
+        }
+        .wf-form-label { 
+            font-size: 14px; 
+            color: #666; 
+            min-width: 60px; 
+        }
+        .wf-form-input { 
+            flex: 1; 
+            padding: 8px 12px; 
+            background: white; 
+            border: 1px solid #d9d9d9; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            color: #999; 
+        }
+        
+        .wf-cover-options { 
+            display: flex; 
+            gap: 20px; 
+            font-size: 14px; 
+            color: #666; 
+        }
+        .wf-cover-option { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+        .wf-cover-option:hover {
+            color: #1890ff;
+        }
+        .wf-cover-option .dot { 
+            width: 14px; 
+            height: 14px; 
+            border-radius: 50%; 
+            border: 1px solid #d9d9d9; 
+            transition: all 0.2s;
+        }
+        .wf-cover-option:hover .dot {
+            border-color: #1890ff;
+        }
+        .wf-cover-option .dot.checked { 
+            border-color: #1890ff; 
+            background: #1890ff; 
+        }
+        .wf-cover-box { 
+            border: 1px dashed #d9d9d9; 
+            border-radius: 4px; 
+            padding: 24px; 
+            text-align: center; 
+            color: #999; 
+            font-size: 14px; 
+            min-width: 140px; 
+        }
+        .wf-cover-box .icon { 
+            font-size: 24px; 
+            margin-bottom: 8px; 
+        }
+        
+        /* Element UI风格日期选择器 */
+        .el-date-picker {
+            display: none;
+            position: fixed;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+            padding: 16px;
+            width: 300px;
+            z-index: 9999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .el-date-picker.active {
+            display: block;
+        }
+        .el-date-picker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 8px;
+        }
+        .el-date-picker-header .el-picker-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #303133;
+            cursor: pointer;
+        }
+        .el-date-picker-header .el-picker-label:hover {
+            color: #409eff;
+        }
+        .el-date-picker-nav {
+            display: flex;
+            gap: 8px;
+        }
+        .el-date-picker-nav-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #606266;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .el-date-picker-nav-btn:hover {
+            color: #409eff;
+        }
+        .el-date-picker-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0;
+            margin-bottom: 4px;
+        }
+        .el-date-picker-weekday {
+            text-align: center;
+            font-size: 12px;
+            color: #909399;
+            padding: 8px 0;
+            font-weight: 400;
+        }
+        .el-date-picker-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0;
+        }
+        .el-date-picker-day {
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .el-date-picker-day:hover {
+            color: #409eff;
+            background: #ecf5ff;
+        }
+        .el-date-picker-day.today {
+            color: #409eff;
+            font-weight: 600;
+        }
+        .el-date-picker-day.selected {
+            background: #409eff;
+            color: white;
+        }
+        .el-date-picker-day.other-month {
+            color: #c0c4cc;
+        }
+        .el-date-picker-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e4e7ed;
+        }
+        .el-date-picker-footer .el-time-display {
+            font-size: 14px;
+            color: #606266;
+        }
+        .el-date-picker-footer .el-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+        .el-date-picker-footer .el-btn {
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #dcdfe6;
+            background: white;
+            color: #606266;
+            transition: all 0.2s;
+        }
+        .el-date-picker-footer .el-btn:hover {
+            color: #409eff;
+            border-color: #b3d8ff;
+            background: #ecf5ff;
+        }
+        .el-date-picker-footer .el-btn.primary {
+            background: #409eff;
+            color: white;
+            border-color: #409eff;
+        }
+        .el-date-picker-footer .el-btn.primary:hover {
+            background: #66b1ff;
+            border-color: #66b1ff;
+        }
+        
+        /* 时间选择器样式 */
+        .el-time-picker {
+            display: none;
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+            padding: 16px;
+            width: 280px;
+            z-index: 9999;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .el-time-picker.active {
+            display: block;
+        }
+        .el-time-picker-header {
+            font-size: 16px;
+            font-weight: 500;
+            color: #303133;
+            margin-bottom: 12px;
+            padding: 0 8px;
+        }
+        .el-time-columns {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .el-time-column {
+            flex: 1;
+            height: 120px;
+            overflow-y: auto;
+            border: 1px solid #e4e7ed;
+            border-radius: 4px;
+        }
+        .el-time-column::-webkit-scrollbar {
+            width: 4px;
+        }
+        .el-time-column::-webkit-scrollbar-thumb {
+            background: #dcdfe6;
+            border-radius: 2px;
+        }
+        .el-time-item {
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+        }
+        .el-time-item:hover {
+            background: #ecf5ff;
+            color: #409eff;
+        }
+        .el-time-item.active {
+            color: #409eff;
+            font-weight: 600;
+        }
+        .el-time-picker-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid #e4e7ed;
+        }
+        .el-time-picker-footer .el-btn {
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #dcdfe6;
+            background: white;
+            color: #606266;
+        }
+        .el-time-picker-footer .el-btn:hover {
+            color: #409eff;
+            border-color: #b3d8ff;
+            background: #ecf5ff;
+        }
+        .el-time-picker-footer .el-btn.primary {
+            background: #409eff;
+            color: white;
+            border-color: #409eff;
+        }
+        .el-time-picker-footer .el-btn.primary:hover {
+            background: #66b1ff;
+            border-color: #66b1ff;
+        }
+        
+        .wf-btn-group { 
+            display: flex; 
+            gap: 16px; 
+            margin-top: 24px; 
+        }
+        .wf-btn { 
+            background: #1890ff; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            padding: 8px 24px; 
+            font-size: 14px; 
+            display: inline-block; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .wf-btn:hover {
+            background: #40a9ff;
+            box-shadow: 0 2px 8px rgba(24,144,255,0.3);
+        }
+        .wf-btn:active {
+            background: #096dd9;
+            transform: scale(0.98);
+        }
+        .wf-btn.secondary { 
+            background: #f5f7fa; 
+            color: #666; 
+            border: 1px solid #d9d9d9; 
+        }
+        .wf-btn.secondary:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-btn.secondary:active {
+            background: #d6e4ff;
+            transform: scale(0.98);
+        }
+        
+        .wf-status-filter { 
+            display: flex; 
+            gap: 20px; 
+            margin-bottom: 20px; 
+        }
+        .wf-status-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 14px; 
+            color: #666; 
+            cursor: pointer; 
+        }
+        .wf-status-item .radio { 
+            width: 16px; 
+            height: 16px; 
+            border-radius: 50%; 
+            border: 1px solid #d9d9d9; 
+        }
+        .wf-status-item .radio.checked { 
+            border-color: #1890ff; 
+            background: #1890ff; 
+        }
+        
+        .wf-filter-bar { 
+            display: flex; 
+            gap: 16px; 
+            margin-bottom: 20px; 
+            flex-wrap: wrap; 
+        }
+        .wf-input { 
+            background: white; 
+            border: 1px solid #d9d9d9; 
+            border-radius: 4px; 
+            padding: 8px 12px; 
+            font-size: 14px; 
+            color: #999; 
+        }
+        
+        .wf-article-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 16px; 
+        }
+        .wf-article-card2 { 
+            background: #f5f7fa; 
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        .wf-article-card2 .cover { 
+            height: 100px; 
+            background: #e8e8e8; 
+        }
+        .wf-article-card2 .info { 
+            padding: 12px; 
+        }
+        .wf-article-card2 .title { 
+            font-size: 14px; 
+            color: #333; 
+            margin-bottom: 6px; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+        .wf-article-card2 .meta { 
+            font-size: 12px; 
+            color: #999; 
+        }
+        .wf-article-card2 .tags { 
+            display: flex; 
+            gap: 6px; 
+            margin-top: 6px; 
+        }
+        .wf-article-card2 .tag { 
+            padding: 2px 6px; 
+            border-radius: 2px; 
+            font-size: 12px; 
+        }
+        .wf-article-card2 .tag.published { 
+            background: #d9f7be; 
+            color: #52c41a; 
+        }
+        .wf-article-card2 .tag.draft { 
+            background: #f5f5f5; 
+            color: #999; 
+        }
+        .wf-article-card2 .tag.pending { 
+            background: #ffe7ba; 
+            color: #fa8c16; 
+        }
+        .wf-article-card2 .tag.online { 
+            background: #d6e4ff; 
+            color: #1890ff; 
+        }
+        .wf-article-card2 .tag.offline { 
+            background: #f5f5f5; 
+            color: #999; 
+        }
+        
+        /* 文章卡片悬停操作按钮 */
+        .wf-article-card2 { 
+            position: relative;
+            cursor: pointer;
+        }
+        .wf-article-card2 .card-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: none;
+            gap: 8px;
+        }
+        .wf-article-card2:hover .card-actions {
+            display: flex;
+        }
+        .wf-article-card2 .card-actions .action-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #666;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .wf-article-card2 .card-actions .action-btn:hover {
+            background: #1890ff;
+            color: white;
+        }
+        
+        .wf-material-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+        }
+        .wf-material-tabs { 
+            display: flex; 
+            gap: 8px; 
+        }
+        .wf-material-tab { 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            background: #f5f7fa; 
+            color: #666; 
+            cursor: pointer; 
+        }
+        .wf-material-tab.active { 
+            background: #1890ff; 
+            color: white; 
+        }
+        .wf-material-topbar { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
+        .wf-material-topbar .count { 
+            font-size: 14px; 
+            color: #666; 
+        }
+        .wf-material-topbar .upload-btn { 
+            background: #1890ff; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            padding: 8px 20px; 
+            font-size: 14px; 
+            cursor: pointer; 
+        }
+        .wf-material-grid { 
+            display: grid; 
+            grid-template-columns: repeat(7, 1fr); 
+            gap: 16px; 
+        }
+        .wf-material-item { 
+            background: #f5f7fa; 
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        .wf-material-item .img { 
+            height: 100px; 
+            background: #e8e8e8; 
+        }
+        .wf-material-item .actions { 
+            display: flex; 
+            justify-content: space-around; 
+            padding: 8px; 
+            font-size: 12px; 
+            color: #999; 
+        }
+        .wf-material-item .actions span { 
+            cursor: pointer; 
+            transition: all 0.2s; 
+        }
+        .wf-material-item .actions span:hover { 
+            color: #1890ff; 
+        }
+        .wf-material-item .actions span:active { 
+            transform: scale(0.95); 
+        }
+        .wf-material-item .actions span.fav-active { 
+            color: #faad14; 
+        }
+        
+        .wf-fan-tabs { 
+            display: flex; 
+            gap: 8px; 
+            margin-bottom: 20px; 
+        }
+        .wf-fan-tab { 
+            padding: 8px 20px; 
+            border-radius: 4px; 
+            font-size: 14px; 
+            background: #f5f7fa; 
+            color: #666; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .wf-fan-tab:hover {
+            color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-fan-tab.active { 
+            background: #1890ff; 
+            color: white; 
+        }
+        .wf-fan-tab.active:hover {
+            background: #40a9ff;
+            color: white;
+        }
+        .wf-fan-overview { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 20px; 
+            margin-bottom: 24px; 
+        }
+        .wf-fan-overview-card { 
+            background: #f5f7fa; 
+            border-radius: 12px; 
+            padding: 20px 24px; 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+        }
+        .wf-fan-overview-card .icon-circle { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 20px; 
+        }
+        .wf-fan-overview-card .info { 
+            flex: 1; 
+        }
+        .wf-fan-overview-card .value { 
+            font-size: 28px; 
+            font-weight: 700; 
+        }
+        .wf-fan-overview-card .label { 
+            font-size: 13px; 
+            color: #999; 
+            margin-top: 4px; 
+        }
+        .wf-fan-overview-card.green { background: #f0f9eb; }
+        .wf-fan-overview-card.green .icon-circle { background: #d4edda; color: #52c41a; }
+        .wf-fan-overview-card.green .value { color: #52c41a; }
+        .wf-fan-overview-card.orange { background: #fff4e6; }
+        .wf-fan-overview-card.orange .icon-circle { background: #ffe8cc; color: #fa8c16; }
+        .wf-fan-overview-card.orange .value { color: #fa8c16; }
+        .wf-fan-overview-card.purple { background: #f3e8ff; }
+        .wf-fan-overview-card.purple .icon-circle { background: #e8d5f5; color: #722ed1; }
+        .wf-fan-overview-card.purple .value { color: #722ed1; }
+        .wf-fan-overview-card.blue { background: #e6f7ff; }
+        .wf-fan-overview-card.blue .icon-circle { background: #bae7ff; color: #1890ff; }
+        .wf-fan-overview-card.blue .value { color: #1890ff; }
+        .wf-fan-chart { 
+            height: 220px; 
+            background: white; 
+            border-radius: 8px; 
+            position: relative; 
+            overflow: hidden; 
+            margin-bottom: 24px; 
+            padding: 20px; 
+        }
+        .wf-fan-chart .chart-title { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #333; 
+            margin-bottom: 16px; 
+            padding-left: 10px; 
+            border-left: 3px solid #1890ff; 
+        }
+        .wf-fan-chart .chart-area { 
+            height: 160px; 
+            position: relative; 
+        }
+        .wf-fan-chart .y-axis { 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+            bottom: 0; 
+            width: 40px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            font-size: 12px; 
+            color: #999; 
+        }
+        .wf-fan-chart .x-axis { 
+            position: absolute; 
+            left: 50px; 
+            right: 0; 
+            bottom: 0; 
+            display: flex; 
+            justify-content: space-between; 
+            font-size: 12px; 
+            color: #999; 
+        }
+        .wf-fan-chart .grid-lines { 
+            position: absolute; 
+            left: 50px; 
+            right: 0; 
+            top: 0; 
+            bottom: 20px; 
+        }
+        .wf-fan-chart .grid-line { 
+            border-bottom: 1px dashed #e8e8e8; 
+            height: 25%; 
+        }
+        .wf-fan-chart .line-chart { 
+            position: absolute; 
+            left: 50px; 
+            right: 0; 
+            top: 0; 
+            bottom: 20px; 
+        }
+        .wf-fan-chart .line-chart svg { 
+            width: 100%; 
+            height: 100%; 
+        }
+        .wf-data-table-section { 
+            margin-top: 24px; 
+        }
+        .wf-data-table-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .wf-data-table-title { 
+            font-size: 16px; 
+            font-weight: 600; 
+            color: #333; 
+            padding-left: 10px; 
+            border-left: 3px solid #1890ff; 
+        }
+        .wf-data-table-filter { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 14px; 
+            color: #666; 
+        }
+        .wf-data-table-filter .date-input { 
+            padding: 6px 12px; 
+            background: #f5f7fa; 
+            border: 1px solid #d9d9d9; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            color: #999; 
+        }
+        .wf-data-table-filter .separator { 
+            color: #999; 
+        }
+        .wf-fan-grid { 
+            display: grid; 
+            grid-template-columns: repeat(6, 1fr); 
+            gap: 16px; 
+        }
+        .wf-fan-card { 
+            background: #f5f7fa; 
+            border-radius: 8px; 
+            padding: 16px; 
+            text-align: center; 
+        }
+        .wf-fan-card .avatar { 
+            width: 48px; 
+            height: 48px; 
+            border-radius: 50%; 
+            background: #d9d9d9; 
+            margin: 0 auto 8px; 
+        }
+        .wf-fan-card .name { 
+            font-size: 14px; 
+            color: #666; 
+            margin-bottom: 8px; 
+        }
+        .wf-fan-card .actions { 
+            display: flex; 
+            gap: 6px; 
+            justify-content: center; 
+        }
+        .wf-fan-card .action-btn { 
+            padding: 4px 12px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            background: white; 
+            color: #666; 
+            border: 1px solid #e8e8e8; 
+            cursor: pointer; 
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .wf-fan-card .action-btn:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-fan-card .action-btn:active {
+            background: #d6e4ff;
+            transform: scale(0.96);
+        }
+        
+        .wf-portrait-section {
+            margin-bottom: 24px;
+        }
+        .wf-portrait-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            padding-left: 12px;
+            border-left: 3px solid #1890ff;
+        }
+        .wf-gender-bar {
+            display: flex;
+            height: 32px;
+            border-radius: 16px;
+            overflow: hidden;
+            gap: 2px;
+        }
+        .wf-gender-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .wf-gender-segment.male { background: #1890ff; width: 68%; }
+        .wf-gender-segment.female { background: #52c41a; width: 32%; }
+        .wf-gender-segment.android { background: #1890ff; width: 35%; }
+        .wf-gender-segment.ios { background: #52c41a; width: 65%; }
+        
+        .wf-portrait-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 24px;
+        }
+        .wf-bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 16px;
+            height: 200px;
+            padding: 0 16px;
+        }
+        .wf-bar-chart-with-axis {
+            display: flex;
+            gap: 12px;
+            height: 280px;
+            padding: 0 16px;
+        }
+        .wf-chart-y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 220px;
+            font-size: 12px;
+            color: #999;
+            min-width: 40px;
+            padding-top: 0;
+            position: relative;
+        }
+        .wf-chart-y-axis span {
+            position: absolute;
+            right: 0;
+            transform: translateY(-50%);
+        }
+        .wf-chart-y-axis span:nth-child(1) { top: 0; }
+        .wf-chart-y-axis span:nth-child(2) { top: 20%; }
+        .wf-chart-y-axis span:nth-child(3) { top: 40%; }
+        .wf-chart-y-axis span:nth-child(4) { top: 60%; }
+        .wf-chart-y-axis span:nth-child(5) { top: 80%; }
+        .wf-chart-y-axis span:nth-child(6) { top: 100%; }
+        .wf-chart-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .wf-chart-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .wf-chart-grid .grid-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            border-top: 1px dashed #e8e8e8;
+        }
+        .wf-chart-grid .grid-line:nth-child(1) { top: 0; }
+        .wf-chart-grid .grid-line:nth-child(2) { top: 20%; }
+        .wf-chart-grid .grid-line:nth-child(3) { top: 40%; }
+        .wf-chart-grid .grid-line:nth-child(4) { top: 60%; }
+        .wf-chart-grid .grid-line:nth-child(5) { top: 80%; }
+        .wf-chart-grid .grid-line:nth-child(6) { top: 100%; }
+        .wf-chart-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 220px;
+            position: relative;
+            z-index: 1;
+        }
+        .wf-bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0;
+            position: relative;
+            height: 100%;
+        }
+        .wf-bar-item .bar {
+            width: 40%;
+            max-width: 40px;
+            background: #d9e6f2;
+            border-radius: 4px 4px 0 0;
+            min-height: 20px;
+            flex-shrink: 0;
+        }
+        .wf-bar-item .label {
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            margin-top: 8px;
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .wf-portrait-pie {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+        }
+        .wf-pie-chart {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(#1890ff 0% 15%, #52c41a 15% 35%, #2c3e50 35% 50%, #faad14 50% 75%, #ff4d4f 75% 85%, #87ceeb 85% 100%);
+            margin-bottom: 0;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .wf-pie-chart::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: white;
+        }
+        .wf-pie-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .wf-pie-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        .wf-pie-legend .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        .wf-pie-legend .dot.blue { background: #1890ff; }
+        .wf-pie-legend .dot.green { background: #52c41a; }
+        .wf-pie-legend .dot.dark { background: #2c3e50; }
+        .wf-pie-legend .dot.yellow { background: #faad14; }
+        .wf-pie-legend .dot.red { background: #ff4d4f; }
+        .wf-pie-legend .dot.light-blue { background: #87ceeb; }
+        
+        .wf-bar-chart-wide {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 200px;
+            padding: 0 16px;
+        }
+        
+        .wf-legend-bar { 
+            display: flex; 
+            gap: 24px; 
+            margin-bottom: 20px; 
+            padding: 12px 20px; 
+            background: #fafafa; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            color: #666; 
+        }
+        .wf-legend-bar .legend-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+        }
+        .wf-legend-bar .legend-color { 
+            width: 20px; 
+            height: 20px; 
+            border-radius: 4px; 
+        }
+        .wf-legend-bar .legend-color.blue { background: #1890ff; }
+        .wf-legend-bar .legend-color.green { background: #52c41a; }
+        .wf-legend-bar .legend-color.orange { background: #fa8c16; }
+        .wf-legend-bar .legend-color.purple { background: #722ed1; }
+        .wf-legend-bar .legend-color.gray { background: #d9d9d9; }
+        .wf-legend-bar .legend-color.dashed { background: transparent; border: 2px dashed #d9d9d9; }
+        
+        .wf-login { 
+            display: flex; 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 24px; 
+            overflow: hidden; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); 
+        }
+        .wf-login-left { 
+            flex: 1; 
+            background: #3A77FA; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            padding: 48px; 
+            color: white; 
+        }
+        .wf-login-left .welcome { 
+            font-size: 30px; 
+            font-weight: 500; 
+            line-height: 36px; 
+            margin-bottom: 8px; 
+        }
+        .wf-login-left .system-name { 
+            font-size: 24px; 
+            font-weight: 500; 
+            line-height: 32px; 
+        }
+        .wf-login-left .illustration { 
+            width: 480px; 
+            height: 358px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        .wf-login-left .illustration img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .wf-login-left .dots { 
+            display: flex; 
+            gap: 8px; 
+            opacity: 0.4; 
+        }
+        .wf-login-left .dots .dot { 
+            width: 8px; 
+            height: 8px; 
+            border-radius: 50%; 
+            background: white; 
+        }
+        .wf-login-left .dots .dot-long { 
+            width: 32px; 
+            height: 8px; 
+            border-radius: 22369600px; 
+            background: white; 
+        }
+        .wf-login-right { 
+            flex: 1; 
+            background: white; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            padding: 160px 48px; 
+        }
+        .wf-login-right .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            margin-bottom: 48px; 
+        }
+        .wf-login-right .logo .icon { 
+            width: 40px; 
+            height: 40px; 
+            background: #3A77FA; 
+            border-radius: 8px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: white; 
+            font-size: 20px; 
+        }
+        .wf-login-right .logo .text { 
+            font-size: 20px; 
+            font-weight: 400; 
+            color: #1E2939; 
+        }
+        .wf-login-form { 
+            width: 100%; 
+            max-width: 480px; 
+        }
+        .wf-login-form .form-group { 
+            margin-bottom: 24px; 
+        }
+        .wf-login-form .form-label { 
+            font-size: 14px; 
+            font-weight: 500; 
+            color: #6A7282; 
+            margin-bottom: 8px; 
+            display: block; 
+        }
+        .wf-login-form .form-input { 
+            width: 100%; 
+            padding: 4px 16px; 
+            height: 48px; 
+            background: #F9FAFB; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 14px; 
+            color: #717182; 
+        }
+        .wf-login-form .checkbox { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            margin-bottom: 24px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            color: #6A7282; 
+        }
+        .wf-login-form .checkbox .box { 
+            width: 16px; 
+            height: 16px; 
+            border-radius: 4px; 
+            background: #F3F3F5; 
+            border: 0.67px solid rgba(0,0,0,0.1); 
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); 
+        }
+        .wf-login-form .login-btn { 
+            width: 100%; 
+            padding: 12px; 
+            height: 48px; 
+            background: #3A77FA; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            letter-spacing: 4px; 
+            box-shadow: 0 4px 6px -4px rgba(0,0,0,0.1), 0 10px 15px -3px rgba(0,0,0,0.1); 
+        }
+        
+        /* 富文本编辑器工具栏 */
+        .wf-editor-toolbar {
+            display: none;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-bottom: none;
+            border-radius: 4px 4px 0 0;
+            padding: 8px 12px;
+            gap: 4px;
+            align-items: center;
+        }
+        .wf-editor-toolbar.active {
+            display: flex;
+        }
+        .wf-toolbar-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .wf-toolbar-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+        .wf-toolbar-divider {
+            width: 1px;
+            height: 20px;
+            background: #e8e8e8;
+            margin: 0 4px;
+        }
+        
+        /* 编辑器内容区域 */
+        .wf-editor-content {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 0 0 4px 4px;
+            padding: 24px;
+            min-height: 320px;
+            font-size: 14px;
+            color: #999;
+            line-height: 1.8;
+            outline: none;
+        }
+        .wf-editor-content:focus {
+            border-color: #1890ff;
+            box-shadow: 0 0 0 2px rgba(24,144,255,0.1);
+        }
+        .wf-editor-content .editor-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f0f0;
+            outline: none;
+        }
+        .wf-editor-content .editor-body {
+            min-height: 200px;
+            outline: none;
+        }
+        .wf-editor-content .editor-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        
+        /* 素材库弹窗 */
+        .wf-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+        .wf-modal-overlay.active {
+            display: flex;
+        }
+        .wf-modal {
+            background: white;
+            border-radius: 8px;
+            width: 800px;
+            max-height: 600px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .wf-modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: center;
+        }
+        .wf-modal-tabs {
+            display: flex;
+            gap: 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 2px;
+        }
+        .wf-modal-tab {
+            padding: 6px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.2s;
+        }
+        .wf-modal-tab.active {
+            background: white;
+            color: #333;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .wf-modal-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            min-height: 400px;
+        }
+        .wf-modal-sidebar {
+            width: 80px;
+            border-right: 1px solid #e8e8e8;
+            padding: 16px 0;
+        }
+        .wf-modal-sidebar-item {
+            padding: 10px 16px;
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .wf-modal-sidebar-item:hover {
+            color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-modal-sidebar-item.active {
+            color: #1890ff;
+            border-left-color: #1890ff;
+            background: #e6f7ff;
+        }
+        .wf-modal-content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+        .wf-modal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .wf-modal-grid-item {
+            aspect-ratio: 4/3;
+            background: #f5f5f5;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        .wf-modal-grid-item:hover {
+            border-color: #1890ff;
+        }
+        .wf-modal-grid-item.selected {
+            border-color: #1890ff;
+        }
+        .wf-modal-grid-item .check-circle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #d9d9d9;
+            background: rgba(255,255,255,0.8);
+            transition: all 0.2s;
+        }
+        .wf-modal-grid-item.selected .check-circle {
+            border-color: #1890ff;
+            background: #1890ff;
+        }
+        .wf-modal-grid-item.selected .check-circle::after {
+            content: '✓';
+            color: white;
+            font-size: 12px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .wf-modal-grid-item .placeholder-img {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+            font-size: 12px;
+        }
+        .wf-modal-grid-item .placeholder-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .wf-modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #e8e8e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .wf-modal-pagination {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        .wf-modal-pagination select {
+            padding: 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .wf-modal-pagination .page-btn {
+            padding: 4px 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #666;
+            background: white;
+        }
+        .wf-modal-pagination .page-btn.active {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+        .wf-modal-pagination .page-btn:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+        .wf-modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+        .wf-modal-btn {
+            padding: 8px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #d9d9d9;
+            background: white;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .wf-modal-btn:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+        .wf-modal-btn.primary {
+            background: #1890ff;
+            border-color: #1890ff;
+            color: white;
+        }
+        .wf-modal-btn.primary:hover {
+            background: #40a9ff;
+        }
+        
+        /* 本地上传区域 */
+        .wf-upload-area {
+            display: none;
+            flex: 1;
+            padding: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+        .wf-upload-area.active {
+            display: flex;
+        }
+        .wf-upload-box {
+            border: 2px dashed #d9d9d9;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            color: #999;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .wf-upload-box:hover {
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+        .wf-upload-box .upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .wf-upload-box .upload-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>黑马头条 - 产品原型图</h1>
+        <p>自媒体人管理系统 | 产品原型设计文档</p>
+    </div>
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">图例说明</h2>
+            <div class="wf-legend-bar">
+                <div class="legend-item"><div class="legend-color blue"></div><span>主要操作/高亮元素</span></div>
+                <div class="legend-item"><div class="legend-color green"></div><span>成功状态/正向数据</span></div>
+                <div class="legend-item"><div class="legend-color orange"></div><span>警告状态/待处理</span></div>
+                <div class="legend-item"><div class="legend-color purple"></div><span>次要信息/辅助数据</span></div>
+                <div class="legend-item"><div class="legend-color gray"></div><span>占位符/未填充内容</span></div>
+                <div class="legend-item"><div class="legend-color dashed"></div><span>可点击区域/输入框</span></div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-login">
+            <h2 class="section-title">3.1 登录页面</h2>
+            <div class="page-card" style="box-shadow: none;">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">登录页面</span>
+                </div>
+                <div class="page-card-body" style="display: flex; justify-content: center; align-items: center; background: #f5f7fa;">
+                    <div class="wireframe" style="width: 80%; height: 80%; display: flex; justify-content: center; align-items: center; background: transparent;">
+                        <div class="wf-login" style="box-shadow: none;">
+                            <div class="wf-login-left">
+                                <div>
+                                    <div class="welcome">欢迎使用</div>
+                                    <div class="system-name">黑马头条自媒体人管理系统</div>
+                                </div>
+                                <div class="illustration">
+                                    <img src="登录插图.png" alt="illustration">
+                                </div>
+                                <div class="dots">
+                                    <div class="dot"></div>
+                                    <div class="dot-long"></div>
+                                </div>
+                            </div>
+                            <div class="wf-login-right">
+                                <div class="logo">
+                                    <div class="icon"></div>
+                                    <div class="text">黑马头条</div>
+                                </div>
+                                <div class="wf-login-form">
+                                    <div class="form-group">
+                                        <label class="form-label">用户名</label>
+                                        <input class="form-input" type="text" placeholder="请输入">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">密码</label>
+                                        <input class="form-input" type="password" placeholder="请输入">
+                                    </div>
+                                    <div class="checkbox">
+                                        <div class="box"></div>
+                                        <span>我已阅读并同意用户协议和隐私政策条款</span>
+                                    </div>
+                                    <button class="login-btn">登 录</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-article-data">
+            <h2 class="section-title">3.2 图文数据 - 列表页</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">图文数据 - 列表页</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item active"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-topbar">
+                                <div class="wf-date-range">
+                                    <span>数据时间：</span>
+                                    <input class="wf-date-input" type="text" placeholder="开始日期">
+                                    <span>至</span>
+                                    <input class="wf-date-input" type="text" placeholder="结束日期">
+                                </div>
+                                <div class="wf-quick-date">
+                                    <span>今日</span><span>本周</span><span class="active">近7天</span><span>近30天</span>
+                                </div>
+                            </div>
+                            <div class="wf-stat-cards">
+                                <div class="wf-stat-card blue">
+                                    <div class="icon">📝</div>
+                                    <div class="info"><div class="value">513</div><div class="label">图文发布量</div></div>
+                                </div>
+                                <div class="wf-stat-card green">
+                                    <div class="icon">👍</div>
+                                    <div class="info"><div class="value">23,456</div><div class="label">点赞数量</div></div>
+                                </div>
+                                <div class="wf-stat-card orange">
+                                    <div class="icon">⭐</div>
+                                    <div class="info"><div class="value">1,235</div><div class="label">收藏数量</div></div>
+                                </div>
+                                <div class="wf-stat-card purple">
+                                    <div class="icon">🔄</div>
+                                    <div class="info"><div class="value">2,567</div><div class="label">转发数量</div></div>
+                                </div>
+                            </div>
+                            <table class="wf-table">
+                                <thead>
+                                    <tr><th>序号</th><th>文章名称</th><th>阅读</th><th>评论量</th><th>收藏量</th><th>转发量</th><th>操作</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>项目管理感悟</td><td>150</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                    <tr><td>2</td><td>北大创业人："理想"的喧哗与骚动</td><td>150</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                    <tr><td>3</td><td>没想到，拼多多竟然想用AI种草喂饱我</td><td>150</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                    <tr><td>4</td><td>英特尔是如何丢掉苹果生意的？</td><td>150</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                    <tr><td>5</td><td>"鹰翼门"关不上，"幽灵刹车"事件不断，特斯拉...</td><td>150</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                    <tr><td>6</td><td>微软及时选择"站队"，或拯救了折叠屏手机的未来...</td><td>234</td><td>150</td><td>10</td><td>150</td><td><span class="wf-link">详细分析</span></td></tr>
+                                </tbody>
+                            </table>
+                            <div class="wf-pagination">
+                                <span>共 6 条</span><span>10条/页</span>
+                                <span class="wf-page-btn">&lt;</span><span class="wf-page-btn active">1</span><span class="wf-page-btn">&gt;</span>
+                                <span>前往</span><input class="wf-date-input" type="text" value="1" style="width: 40px;"><span>页</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-article-detail">
+            <h2 class="section-title">3.3 文章数据详情</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">文章数据详情</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item active"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-back">← 返回</div>
+                            <div class="wf-topbar">
+                                <div class="wf-date-range">
+                                    <span>数据时间：</span>
+                                    <input class="wf-date-input" type="text" placeholder="开始日期">
+                                    <span>至</span>
+                                    <input class="wf-date-input" type="text" placeholder="结束日期">
+                                </div>
+                                <div class="wf-quick-date">
+                                    <span>今日</span><span>本周</span><span class="active">近7天</span><span>近30天</span>
+                                </div>
+                            </div>
+                            <div class="wf-stat-cards">
+                                <div class="wf-stat-card blue">
+                                    <div class="icon">📖</div>
+                                    <div class="info"><div class="value">61%</div><div class="label">平均阅读进度</div></div>
+                                </div>
+                                <div class="wf-stat-card green">
+                                    <div class="icon">👋</div>
+                                    <div class="info"><div class="value">13.2%</div><div class="label">跳出率</div></div>
+                                </div>
+                                <div class="wf-stat-card orange">
+                                    <div class="icon">⏱️</div>
+                                    <div class="info"><div class="value">107</div><div class="label">平均阅读时间（秒）</div></div>
+                                </div>
+                                <div class="wf-stat-card purple">
+                                    <div class="icon">🔄</div>
+                                    <div class="info"><div class="value">2,567</div><div class="label">推荐转发量</div></div>
+                                </div>
+                            </div>
+                            <div class="wf-stat-cards" style="grid-template-columns: repeat(4, 1fr);">
+                                <div class="wf-stat-card green">
+                                    <div class="icon">💬</div>
+                                    <div class="info"><div class="value">231</div><div class="label">评论量</div></div>
+                                </div>
+                                <div class="wf-stat-card orange">
+                                    <div class="icon">👁️</div>
+                                    <div class="info"><div class="value">1,247</div><div class="label">总阅读量</div></div>
+                                </div>
+                                <div class="wf-stat-card blue">
+                                    <div class="icon">👥</div>
+                                    <div class="info"><div class="value">987</div><div class="label">粉丝阅读量</div></div>
+                                </div>
+                                <div style="visibility: hidden;"></div>
+                            </div>
+                            <div class="wf-charts-row">
+                                <div class="wf-chart-box">
+                                    <div class="chart-title">阅读来源分析</div>
+                                    <div style="display: flex; align-items: center; gap: 24px;">
+                                        <div class="wf-donut"></div>
+                                        <div class="wf-legend">
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #1890ff;"></div><span>推荐</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #52c41a;"></div><span>频道</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #722ed1;"></div><span>相关阅读</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #faad14;"></div><span>应用外阅读</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #ff4d4f;"></div><span>其他（搜索、推送等）</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wf-chart-box">
+                                    <div class="chart-title">阅读完成度分析</div>
+                                    <div style="display: flex; align-items: center; gap: 24px;">
+                                        <div class="wf-donut" style="background: conic-gradient(#1890ff 0% 30%, #52c41a 30% 80%, #722ed1 80% 100%);"></div>
+                                        <div class="wf-legend">
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #1890ff;"></div><span>20%以下</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #52c41a;"></div><span>20%-80%</span></div>
+                                            <div class="wf-legend-item"><div class="wf-legend-dot" style="background: #722ed1;"></div><span>80%以上</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-publish">
+            <h2 class="section-title">3.4 发布文章</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">发布文章</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-editor-toolbar" id="editorToolbar">
+                                <button class="wf-toolbar-btn" title="加粗"><b>B</b></button>
+                                <button class="wf-toolbar-btn" title="斜体"><i>I</i></button>
+                                <button class="wf-toolbar-btn" title="下划线"><u>U</u></button>
+                                <div class="wf-toolbar-divider"></div>
+                                <button class="wf-toolbar-btn" title="标题">H</button>
+                                <button class="wf-toolbar-btn" title="引用">❝</button>
+                                <div class="wf-toolbar-divider"></div>
+                                <button class="wf-toolbar-btn" title="有序列表">1.</button>
+                                <button class="wf-toolbar-btn" title="无序列表">•</button>
+                                <div class="wf-toolbar-divider"></div>
+                                <button class="wf-toolbar-btn" title="插入图片" id="insertImageBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></button>
+                                <div class="wf-toolbar-divider"></div>
+                                <button class="wf-toolbar-btn" title="左对齐">≡</button>
+                                <button class="wf-toolbar-btn" title="居中">☰</button>
+                                <button class="wf-toolbar-btn" title="右对齐">≡</button>
+                            </div>
+                            <div class="wf-editor-content" id="editorContent">
+                                <div class="editor-title" contenteditable="true">请在这里输入标题</div>
+                                <div class="editor-body" contenteditable="true" id="editorBody">请在这里输入正文</div>
+                            </div>
+                            <div class="wf-form-row" style="margin-top: 24px;">
+                                <div class="wf-form-label">标签：</div>
+                                <input class="wf-form-input" type="text" placeholder="请输入标签" style="max-width: 200px;">
+                                <span style="font-size: 12px; color: #999;">0/20</span>
+                                <div class="wf-form-label">频道：</div>
+                                <select class="wf-form-input" style="max-width: 200px; cursor: pointer;">
+                                    <option value="">请选择频道</option>
+                                    <option value="1">科技</option>
+                                    <option value="2">娱乐</option>
+                                    <option value="3">体育</option>
+                                    <option value="4">财经</option>
+                                    <option value="5">军事</option>
+                                    <option value="6">汽车</option>
+                                    <option value="7">健康</option>
+                                </select>
+                                <div class="wf-form-label">定时：</div>
+                                <input class="wf-form-input datetime-input" type="text" placeholder="请选择日期时间" style="max-width: 200px;">
+                            </div>
+                            <div class="wf-form-row">
+                                <div class="wf-form-label">封面：</div>
+                                <div class="wf-cover-options">
+                                    <div class="wf-cover-option"><div class="dot checked"></div><span>单图</span></div>
+                                    <div class="wf-cover-option"><div class="dot"></div><span>三图</span></div>
+                                    <div class="wf-cover-option"><div class="dot"></div><span>无图</span></div>
+                                </div>
+                            </div>
+                            <div class="wf-cover-box">
+                                <button id="coverImageBox" style="border: none; background: none; cursor: pointer; padding: 0; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #999; font-size: 14px;">
+                                    <span style="font-size: 24px;">🖼️</span>
+                                    <span>选择图片</span>
+                                </button>
+                            </div>
+                            <div class="wf-btn-group">
+                                <button class="wf-btn secondary">存入草稿</button>
+                                <button class="wf-btn">提交审核</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-content-list">
+            <h2 class="section-title">3.5 内容列表</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">内容列表</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-status-filter">
+                                <div class="wf-status-item"><div class="radio checked"></div><span>全部</span></div>
+                                <div class="wf-status-item"><div class="radio"></div><span>草稿</span></div>
+                                <div class="wf-status-item"><div class="radio"></div><span>待审核</span></div>
+                                <div class="wf-status-item"><div class="radio"></div><span>审核通过</span></div>
+                                <div class="wf-status-item"><div class="radio"></div><span>审核失败</span></div>
+                            </div>
+                            <div class="wf-filter-bar">
+                                <input class="wf-input" type="text" placeholder="请输入关键字">
+                                <select class="wf-input"><option>全部</option></select>
+                                <input class="wf-input" type="text" placeholder="开始日期 - 结束日期">
+                            </div>
+                            <!-- 
+                                交互说明：
+                                1. 草稿状态：鼠标悬停显示【编辑】和【删除】按钮
+                                2. 已发表且已上架：鼠标悬停显示【下架】按钮
+                                3. 已发表且已下架：鼠标悬停显示【上架】按钮
+                            -->
+                            <div class="wf-article-grid">
+                                <!-- 草稿状态：显示编辑和删除按钮 -->
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="编辑">✏️</div>
+                                        <div class="action-btn" title="删除">🗑️</div>
+                                    </div>
+                                    <div class="info"><div class="title">一起登顶峨眉山风光</div><div class="meta">2023-05-16</div><div class="tags"><span class="tag draft">草稿</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="编辑">✏️</div>
+                                        <div class="action-btn" title="删除">🗑️</div>
+                                    </div>
+                                    <div class="info"><div class="title">新年今年礼物都在这里</div><div class="meta">2023-05-13</div><div class="tags"><span class="tag draft">草稿</span></div></div>
+                                </div>
+                                <!-- 待审核状态：无操作按钮 -->
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="info"><div class="title">联合国昨夜召开紧急会议</div><div class="meta">2023-04-25</div><div class="tags"><span class="tag pending">待审核</span></div></div>
+                                </div>
+                                <!-- 已发表且已下架：显示上架按钮 -->
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="上架">⬆️</div>
+                                    </div>
+                                    <div class="info"><div class="title">工作计划如何制定，来听听专家怎么说</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag offline">已下架</span></div></div>
+                                </div>
+                                <!-- 已发表且已上架：显示下架按钮 -->
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">我国野生动植物保护进展成果显著</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">科技如何改变我们的生活</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">美议会预计于9月讨论紧急问题</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">我们要严肃关切人口问题，事实比数据更触目惊心</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">我国农业害虫防治工作取得突破进展</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                                <div class="wf-article-card2">
+                                    <div class="cover"></div>
+                                    <div class="card-actions">
+                                        <div class="action-btn" title="下架">⬇️</div>
+                                    </div>
+                                    <div class="info"><div class="title">航拍成都，你一定没有见过这样的夜色</div><div class="meta">2021-07-10</div><div class="tags"><span class="tag published">已发表</span><span class="tag online">已上架</span></div></div>
+                                </div>
+                            </div>
+                            <div class="wf-pagination">
+                                <span>共 72 条</span><span>10条/页</span>
+                                <span class="wf-page-btn">&lt;</span><span class="wf-page-btn active">1</span><span class="wf-page-btn">2</span><span class="wf-page-btn">3</span><span class="wf-page-btn">4</span><span class="wf-page-btn">5</span><span class="wf-page-btn">6</span><span class="wf-page-btn">...</span><span class="wf-page-btn">8</span><span class="wf-page-btn">&gt;</span>
+                                <span>前往</span><input class="wf-date-input" type="text" value="1" style="width: 40px;"><span>页</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-material">
+            <h2 class="section-title">3.6 素材管理</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">素材管理</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-material-header">
+                                <div class="wf-material-tabs">
+                                    <div class="wf-material-tab active">全部</div>
+                                    <div class="wf-material-tab">收藏</div>
+                                </div>
+                                <div class="wf-material-topbar">
+                                    <div class="count">已上传40张图片</div>
+                                    <button class="upload-btn">⊕ 上传图片</button>
+                                </div>
+                            </div>
+                            <div class="wf-material-grid">
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>☆ 收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>★ 已收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>★ 已收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>★ 已收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>☆ 收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>☆ 收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>☆ 收藏</span><span>🗑 删除</span></div></div>
+                                <div class="wf-material-item"><div class="img"></div><div class="actions"><span>☆ 收藏</span><span>🗑 删除</span></div></div>
+                            </div>
+                            <div class="wf-pagination">
+                                <span>共 40 条</span><span>10条/页</span>
+                                <span class="wf-page-btn">&lt;</span><span class="wf-page-btn active">1</span><span class="wf-page-btn">2</span><span class="wf-page-btn">3</span><span class="wf-page-btn">4</span><span class="wf-page-btn">&gt;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-fan-overview">
+            <h2 class="section-title">3.7 粉丝管理 - 粉丝概况</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">粉丝管理 - 粉丝概况</span>
+                </div>
+                <div class="page-card-body" style="min-height: 1200px; max-width: 1360px;">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-fan-tabs">
+                                <div class="wf-fan-tab active">粉丝概况</div>
+                                <div class="wf-fan-tab">粉丝画像</div>
+                                <div class="wf-fan-tab">粉丝列表</div>
+                            </div>
+                            <div class="wf-date-range" style="margin-bottom:24px;">
+                                <span>统计日期：</span>
+                                <span class="wf-date-input">📅 开始日期</span>
+                                <span>-</span>
+                                <span class="wf-date-input">结束日期</span>
+                                <div class="wf-quick-date" style="margin-left:16px;">
+                                    <span>今日</span>
+                                    <span class="active">本周</span>
+                                    <span>近7天</span>
+                                    <span>近30天</span>
+                                </div>
+                            </div>
+                            <div class="wf-fan-overview">
+                                <div class="wf-fan-overview-card green">
+                                    <div class="icon-circle">👤</div>
+                                    <div class="info">
+                                        <div class="value">3,356</div>
+                                        <div class="label">累计粉丝数量</div>
+                                    </div>
+                                </div>
+                                <div class="wf-fan-overview-card orange">
+                                    <div class="icon-circle">👁️</div>
+                                    <div class="info">
+                                        <div class="value">3,235</div>
+                                        <div class="label">粉丝累计阅读量</div>
+                                    </div>
+                                </div>
+                                <div class="wf-fan-overview-card purple">
+                                    <div class="icon-circle">💰</div>
+                                    <div class="info">
+                                        <div class="value">2,567</div>
+                                        <div class="label">粉丝收益（元）</div>
+                                    </div>
+                                </div>
+                                <div class="wf-fan-overview-card blue">
+                                    <div class="icon-circle">📉</div>
+                                    <div class="info">
+                                        <div class="value">834</div>
+                                        <div class="label">取消关注量</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wf-fan-chart">
+                                <div class="chart-title">阅读量趋势图</div>
+                                <div class="chart-area">
+                                    <div class="y-axis">
+                                        <span>1,500</span>
+                                        <span>1,200</span>
+                                        <span>900</span>
+                                        <span>600</span>
+                                        <span>300</span>
+                                        <span>0</span>
+                                    </div>
+                                    <div class="grid-lines">
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                        <div class="grid-line"></div>
+                                    </div>
+                                    <div class="line-chart">
+                                        <svg viewBox="0 0 800 160" preserveAspectRatio="none">
+                                            <polyline fill="none" stroke="#52c41a" stroke-width="2" points="
+                                                0,110 30,95 60,100 90,85 120,50 150,35 180,30 210,70 240,60 270,65 300,55 330,30 360,25 390,28 420,80 450,65 480,70 510,60 540,30 570,25 600,28 630,80 660,50
+                                            "/>
+                                            <circle cx="0" cy="110" r="3" fill="#52c41a"/>
+                                            <circle cx="30" cy="95" r="3" fill="#52c41a"/>
+                                            <circle cx="60" cy="100" r="3" fill="#52c41a"/>
+                                            <circle cx="90" cy="85" r="3" fill="#52c41a"/>
+                                            <circle cx="120" cy="50" r="3" fill="#52c41a"/>
+                                            <circle cx="150" cy="35" r="3" fill="#52c41a"/>
+                                            <circle cx="180" cy="30" r="3" fill="#52c41a"/>
+                                            <circle cx="210" cy="70" r="3" fill="#52c41a"/>
+                                            <circle cx="240" cy="60" r="3" fill="#52c41a"/>
+                                            <circle cx="270" cy="65" r="3" fill="#52c41a"/>
+                                            <circle cx="300" cy="55" r="3" fill="#52c41a"/>
+                                            <circle cx="330" cy="30" r="3" fill="#52c41a"/>
+                                            <circle cx="360" cy="25" r="3" fill="#52c41a"/>
+                                            <circle cx="390" cy="28" r="3" fill="#52c41a"/>
+                                            <circle cx="420" cy="80" r="3" fill="#52c41a"/>
+                                            <circle cx="450" cy="65" r="3" fill="#52c41a"/>
+                                            <circle cx="480" cy="70" r="3" fill="#52c41a"/>
+                                            <circle cx="510" cy="60" r="3" fill="#52c41a"/>
+                                            <circle cx="540" cy="30" r="3" fill="#52c41a"/>
+                                            <circle cx="570" cy="25" r="3" fill="#52c41a"/>
+                                            <circle cx="600" cy="28" r="3" fill="#52c41a"/>
+                                            <circle cx="630" cy="80" r="3" fill="#52c41a"/>
+                                            <circle cx="660" cy="50" r="3" fill="#52c41a"/>
+                                        </svg>
+                                    </div>
+                                    <div class="x-axis">
+                                        <span>00:00</span>
+                                        <span>02:00</span>
+                                        <span>04:00</span>
+                                        <span>06:00</span>
+                                        <span>08:00</span>
+                                        <span>10:00</span>
+                                        <span>12:00</span>
+                                        <span>14:00</span>
+                                        <span>16:00</span>
+                                        <span>18:00</span>
+                                        <span>20:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wf-data-table-section">
+                                <div class="wf-data-table-header">
+                                    <div class="wf-data-table-title">数据列表</div>
+                                    <div class="wf-data-table-filter">
+                                        <span>📅</span>
+                                        <span class="date-input">开始日期</span>
+                                        <span class="separator">至</span>
+                                        <span class="date-input">结束日期</span>
+                                    </div>
+                                </div>
+                                <table class="wf-table">
+                                    <thead>
+                                        <tr>
+                                            <th>时间</th>
+                                            <th>粉丝数量</th>
+                                            <th>粉丝阅读量</th>
+                                            <th>粉丝收益（元）</th>
+                                            <th>取消关注量</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>2020-08-02</td>
+                                            <td>50</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>3,365</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-08-01</td>
+                                            <td>150</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td>3,300</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-31</td>
+                                            <td>50</td>
+                                            <td>6</td>
+                                            <td>6</td>
+                                            <td>3,223</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-30</td>
+                                            <td>150</td>
+                                            <td>8</td>
+                                            <td>8</td>
+                                            <td>3,210</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-29</td>
+                                            <td>125</td>
+                                            <td>9</td>
+                                            <td>9</td>
+                                            <td>3,108</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2020-07-28</td>
+                                            <td>150</td>
+                                            <td>29</td>
+                                            <td>29</td>
+                                            <td>3,034</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="wf-pagination">
+                                    <span style="font-size:14px;color:#666;margin-right:12px;">共 6 条</span>
+                                    <span style="font-size:14px;color:#666;margin-right:8px;">10条/页</span>
+                                    <span class="wf-page-btn">‹</span>
+                                    <span class="wf-page-btn active">1</span>
+                                    <span class="wf-page-btn">›</span>
+                                    <span style="font-size:14px;color:#666;margin-left:8px;">前往</span>
+                                    <span class="wf-page-input" style="width:40px;padding:4px 8px;border:1px solid #d9d9d9;border-radius:4px;text-align:center;font-size:14px;">1</span>
+                                    <span style="font-size:14px;color:#666;margin-left:4px;">页</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-fan-portrait">
+            <h2 class="section-title">3.8 粉丝管理 - 粉丝画像</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">粉丝管理 - 粉丝画像</span>
+                </div>
+                <div class="page-card-body" style="min-height: 1000px; max-width: 1360px;">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon"></span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-fan-tabs">
+                                <div class="wf-fan-tab">粉丝概况</div>
+                                <div class="wf-fan-tab active">粉丝画像</div>
+                                <div class="wf-fan-tab">粉丝列表</div>
+                            </div>
+                            <div class="wf-portrait-row" style="margin-bottom:32px;display:grid;grid-template-columns:1fr 1fr;">
+                                <div class="wf-portrait-section">
+                                    <div class="wf-portrait-title">粉丝性别比例</div>
+                                    <div class="wf-gender-bar">
+                                        <div class="wf-gender-segment male" style="width:68%;"><span>男 68%</span></div>
+                                        <div class="wf-gender-segment female" style="width:32%;"><span>女 32%</span></div>
+                                    </div>
+                                </div>
+                                <div class="wf-portrait-section">
+                                    <div class="wf-portrait-title">粉丝终端分布</div>
+                                    <div class="wf-gender-bar">
+                                        <div class="wf-gender-segment android" style="width:35%;"><span>android 35%</span></div>
+                                        <div class="wf-gender-segment ios" style="width:65%;"><span>iOS 65%</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wf-portrait-row">
+                                <div class="wf-portrait-chart">
+                                    <div class="wf-portrait-title">粉丝年龄分布</div>
+                                    <div class="wf-bar-chart-with-axis">
+                                        <div class="wf-chart-y-axis">
+                                            <span>500</span>
+                                            <span>400</span>
+                                            <span>300</span>
+                                            <span>200</span>
+                                            <span>100</span>
+                                            <span>0</span>
+                                        </div>
+                                        <div class="wf-chart-area">
+                                            <div class="wf-chart-grid">
+                                                <div class="grid-line"></div>
+                                                <div class="grid-line"></div>
+                                                <div class="grid-line"></div>
+                                                <div class="grid-line"></div>
+                                                <div class="grid-line"></div>
+                                                <div class="grid-line"></div>
+                                            </div>
+                                            <div class="wf-chart-bars">
+                                                <div class="wf-bar-item"><div class="bar" style="height:50%"></div><div class="label">0-17岁</div></div>
+                                                <div class="wf-bar-item"><div class="bar" style="height:70%"></div><div class="label">18-23岁</div></div>
+                                                <div class="wf-bar-item"><div class="bar" style="height:55%"></div><div class="label">24-30岁</div></div>
+                                                <div class="wf-bar-item"><div class="bar" style="height:95%"></div><div class="label">31-40岁</div></div>
+                                                <div class="wf-bar-item"><div class="bar" style="height:35%"></div><div class="label">41-50岁</div></div>
+                                                <div class="wf-bar-item"><div class="bar" style="height:50%"></div><div class="label">50+岁</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="wf-portrait-pie">
+                                    <div class="wf-pie-chart"></div>
+                                    <div class="wf-pie-legend">
+                                        <div class="legend-item"><span class="dot blue"></span>0-17岁</div>
+                                        <div class="legend-item"><span class="dot green"></span>18-23岁</div>
+                                        <div class="legend-item"><span class="dot dark"></span>24-30岁</div>
+                                        <div class="legend-item"><span class="dot yellow"></span>31-40岁</div>
+                                        <div class="legend-item"><span class="dot red"></span>41-50岁</div>
+                                        <div class="legend-item"><span class="dot light-blue"></span>50岁+</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wf-portrait-section">
+                                <div class="wf-portrait-title">你的受众喜欢哪些分类的内容</div>
+                                <div class="wf-bar-chart-with-axis">
+                                    <div class="wf-chart-y-axis">
+                                        <span>500</span>
+                                        <span>400</span>
+                                        <span>300</span>
+                                        <span>200</span>
+                                        <span>100</span>
+                                        <span>0</span>
+                                    </div>
+                                    <div class="wf-chart-area">
+                                        <div class="wf-chart-grid">
+                                            <div class="grid-line"></div>
+                                            <div class="grid-line"></div>
+                                            <div class="grid-line"></div>
+                                            <div class="grid-line"></div>
+                                            <div class="grid-line"></div>
+                                            <div class="grid-line"></div>
+                                        </div>
+                                        <div class="wf-chart-bars">
+                                            <div class="wf-bar-item"><div class="bar" style="height:50%"></div><div class="label">大数据</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:70%"></div><div class="label">人工智能</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:55%"></div><div class="label">智能硬件</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:95%"></div><div class="label">新品发布</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:35%"></div><div class="label">智慧成熟</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:50%"></div><div class="label">智慧交通</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:50%"></div><div class="label">物联网</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:70%"></div><div class="label">爬虫技术</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:55%"></div><div class="label">游戏技术</div></div>
+                                            <div class="wf-bar-item"><div class="bar" style="height:95%"></div><div class="label">计算机语言</div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="sec-fan-list">
+            <h2 class="section-title">3.9 粉丝管理 - 粉丝列表</h2>
+            <div class="page-card">
+                <div class="page-card-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                    <span class="page-name">粉丝管理 - 粉丝列表</span>
+                </div>
+                <div class="page-card-body">
+                    <div class="wireframe">
+                        <div class="wf-sidebar">
+                            <div class="wf-sidebar-logo">
+                                <div class="logo-icon">📰</div>
+                                <div class="logo-text">黑马头条</div>
+                            </div>
+                            <div class="wf-sidebar-menu">
+                                <div class="wf-sidebar-item"><span class="icon">📊</span><span>图文数据</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">✏️</span><span>发布文章</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">📄</span><span>内容列表</span></div>
+                                <div class="wf-sidebar-item"><span class="icon">🖼️</span><span>素材管理</span></div>
+                                <div class="wf-sidebar-item active"><span class="icon">👥</span><span>粉丝管理</span></div>
+                            </div>
+                            <div class="wf-sidebar-user">
+                                <div class="avatar"></div>
+                                <div class="username">demo</div>
+                            </div>
+                        </div>
+                        <div class="wf-main">
+                            <div class="wf-fan-tabs">
+                                <div class="wf-fan-tab">粉丝概况</div>
+                                <div class="wf-fan-tab">粉丝画像</div>
+                                <div class="wf-fan-tab active">粉丝列表</div>
+                            </div>
+                            <div class="wf-fan-grid">
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户A</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户B</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户C</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户D</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户E</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户F</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户G</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户H</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户I</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户J</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户K</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户L</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户M</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户N</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户O</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户P</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户Q</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                                <div class="wf-fan-card"><div class="avatar"></div><div class="name">用户R</div><div class="actions"><button class="action-btn">发消息</button><button class="action-btn">拉黑</button></div></div>
+                            </div>
+                            <div style="text-align:center;margin-top:24px;">
+                                <button class="wf-btn" style="padding:8px 32px;">点击查看更多</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 上传图片弹窗 -->
+    <div class="upload-modal-overlay" id="uploadModalOverlay">
+        <div class="upload-modal">
+            <div class="upload-modal-header">
+                <span class="upload-modal-title">上传图片</span>
+                <span class="upload-modal-close" id="uploadModalClose">✕</span>
+            </div>
+            <div class="upload-modal-body">
+                <div class="upload-dropzone" id="uploadDropzone">
+                    <div class="upload-icon">🖼️</div>
+                    <div class="upload-text">选择图片</div>
+                </div>
+                <div class="upload-hint">支持扩展名：jpg、png，文件不得大于2MB</div>
+                <div class="upload-progress" id="uploadProgress" style="display:none;">
+                    <div class="upload-progress-bar">
+                        <div class="upload-progress-fill" id="uploadProgressFill" style="width:0%"></div>
+                    </div>
+                    <span class="upload-progress-text" id="uploadProgressText">0%</span>
+                </div>
+                <button class="upload-start-btn" id="uploadStartBtn" disabled>
+                    <span class="upload-start-icon">▶</span> 开始上传
+                </button>
+            </div>
+            <div class="upload-modal-footer">
+                <button class="upload-modal-btn" id="uploadModalCancel">关闭</button>
+                <button class="upload-modal-btn primary" id="uploadModalConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+    <!-- Element UI风格日期选择器 -->
+    <div class="el-date-picker" id="elDatePicker">
+        <div class="el-date-picker-header">
+            <button class="el-date-picker-nav-btn" id="prevYear">«</button>
+            <button class="el-date-picker-nav-btn" id="prevMonth">‹</button>
+            <span class="el-picker-label" id="monthLabel"></span>
+            <span class="el-picker-label" id="yearLabel"></span>
+            <button class="el-date-picker-nav-btn" id="nextMonth">›</button>
+            <button class="el-date-picker-nav-btn" id="nextYear">»</button>
+        </div>
+        <div class="el-date-picker-weekdays">
+            <div class="el-date-picker-weekday">日</div>
+            <div class="el-date-picker-weekday">一</div>
+            <div class="el-date-picker-weekday">二</div>
+            <div class="el-date-picker-weekday">三</div>
+            <div class="el-date-picker-weekday">四</div>
+            <div class="el-date-picker-weekday">五</div>
+            <div class="el-date-picker-weekday">六</div>
+        </div>
+        <div class="el-date-picker-days" id="datePickerDays"></div>
+        <div class="el-date-picker-footer">
+            <div class="el-btn-group">
+                <button class="el-btn" id="cancelDate">取消</button>
+                <button class="el-btn primary" id="confirmDate">确定</button>
+            </div>
+        </div>
+    </div>
+    <!-- Element UI风格日期时间选择器 -->
+    <div class="el-date-picker" id="elDateTimePicker">
+        <div class="el-date-picker-header">
+            <button class="el-date-picker-nav-btn" id="dtPrevYear">«</button>
+            <button class="el-date-picker-nav-btn" id="dtPrevMonth">‹</button>
+            <span class="el-picker-label" id="dtMonthLabel"></span>
+            <span class="el-picker-label" id="dtYearLabel"></span>
+            <button class="el-date-picker-nav-btn" id="dtNextMonth">›</button>
+            <button class="el-date-picker-nav-btn" id="dtNextYear">»</button>
+        </div>
+        <div class="el-date-picker-weekdays">
+            <div class="el-date-picker-weekday">日</div>
+            <div class="el-date-picker-weekday">一</div>
+            <div class="el-date-picker-weekday">二</div>
+            <div class="el-date-picker-weekday">三</div>
+            <div class="el-date-picker-weekday">四</div>
+            <div class="el-date-picker-weekday">五</div>
+            <div class="el-date-picker-weekday">六</div>
+        </div>
+        <div class="el-date-picker-days" id="dtDatePickerDays"></div>
+        <div class="el-time-columns" style="margin-top:12px;">
+            <div class="el-time-column" id="hourColumn"></div>
+            <div class="el-time-column" id="minuteColumn"></div>
+            <div class="el-time-column" id="secondColumn"></div>
+        </div>
+        <div class="el-date-picker-footer">
+            <div class="el-btn-group">
+                <button class="el-btn" id="dtCancelDate">取消</button>
+                <button class="el-btn primary" id="dtConfirmDate">确定</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        let currentDate = new Date();
+        let selectedDate = null;
+        let activeInput = null;
+        let selectedTime = { hour: 12, minute: 0, second: 0 };
+        const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+        
+        function renderCalendar(date, containerId) {
+            const year = date.getFullYear();
+            const month = date.getMonth();
+            const monthLabelId = containerId === 'dtDatePickerDays' ? 'dtMonthLabel' : 'monthLabel';
+            const yearLabelId = containerId === 'dtDatePickerDays' ? 'dtYearLabel' : 'yearLabel';
+            document.getElementById(monthLabelId).textContent = months[month];
+            document.getElementById(yearLabelId).textContent = year + '年';
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const today = new Date();
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = document.createElement('div');
+                day.className = 'el-date-picker-day other-month';
+                day.textContent = daysInPrevMonth - i;
+                container.appendChild(day);
+            }
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                day.className = 'el-date-picker-day';
+                day.textContent = i;
+                if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                    day.classList.add('today');
+                }
+                if (selectedDate && year === selectedDate.getFullYear() && month === selectedDate.getMonth() && i === selectedDate.getDate()) {
+                    day.classList.add('selected');
+                }
+                day.addEventListener('click', function() {
+                    selectedDate = new Date(year, month, i);
+                    renderCalendar(date, containerId);
+                });
+                container.appendChild(day);
+            }
+            const totalCells = container.children.length;
+            const remaining = 42 - totalCells;
+            for (let i = 1; i <= remaining; i++) {
+                const day = document.createElement('div');
+                day.className = 'el-date-picker-day other-month';
+                day.textContent = i;
+                container.appendChild(day);
+            }
+        }
+        
+        function renderTimeColumns() {
+            const hourCol = document.getElementById('hourColumn');
+            const minuteCol = document.getElementById('minuteColumn');
+            const secondCol = document.getElementById('secondColumn');
+            hourCol.innerHTML = '';
+            minuteCol.innerHTML = '';
+            secondCol.innerHTML = '';
+            for (let i = 0; i < 24; i++) {
+                const item = document.createElement('div');
+                item.className = 'el-time-item' + (i === selectedTime.hour ? ' active' : '');
+                item.textContent = String(i).padStart(2, '0');
+                item.addEventListener('click', function() {
+                    selectedTime.hour = i;
+                    renderTimeColumns();
+                });
+                hourCol.appendChild(item);
+            }
+            for (let i = 0; i < 60; i++) {
+                const item = document.createElement('div');
+                item.className = 'el-time-item' + (i === selectedTime.minute ? ' active' : '');
+                item.textContent = String(i).padStart(2, '0');
+                item.addEventListener('click', function() {
+                    selectedTime.minute = i;
+                    renderTimeColumns();
+                });
+                minuteCol.appendChild(item);
+            }
+            for (let i = 0; i < 60; i++) {
+                const item = document.createElement('div');
+                item.className = 'el-time-item' + (i === selectedTime.second ? ' active' : '');
+                item.textContent = String(i).padStart(2, '0');
+                item.addEventListener('click', function() {
+                    selectedTime.second = i;
+                    renderTimeColumns();
+                });
+                secondCol.appendChild(item);
+            }
+        }
+        
+        function formatDate(date) {
+            if (!date) return '';
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+        
+        function formatDateTime(date) {
+            if (!date) return '';
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            const h = String(selectedTime.hour).padStart(2, '0');
+            const min = String(selectedTime.minute).padStart(2, '0');
+            const s = String(selectedTime.second).padStart(2, '0');
+            return `${y}-${m}-${d} ${h}:${min}:${s}`;
+        }
+        
+        function showDatePicker(input) {
+            activeInput = input;
+            currentDate = new Date();
+            selectedDate = null;
+            renderCalendar(currentDate, 'datePickerDays');
+            const picker = document.getElementById('elDatePicker');
+            const rect = input.getBoundingClientRect();
+            picker.style.left = rect.left + 'px';
+            picker.style.top = (rect.bottom + 5) + 'px';
+            picker.classList.add('active');
+        }
+        
+        function showDateTimePicker(input) {
+            activeInput = input;
+            currentDate = new Date();
+            selectedDate = null;
+            selectedTime = { hour: 12, minute: 0, second: 0 };
+            renderCalendar(currentDate, 'dtDatePickerDays');
+            renderTimeColumns();
+            const picker = document.getElementById('elDateTimePicker');
+            const rect = input.getBoundingClientRect();
+            picker.style.left = rect.left + 'px';
+            picker.style.top = (rect.bottom + 5) + 'px';
+            picker.classList.add('active');
+        }
+        
+        function hideDatePicker() {
+            document.getElementById('elDatePicker').classList.remove('active');
+            document.getElementById('elDateTimePicker').classList.remove('active');
+        }
+        
+        // 绑定日期选择器
+        document.querySelectorAll('.wf-date-input, .wf-input[placeholder*="日期"], .date-input').forEach(input => {
+            input.style.cursor = 'pointer';
+            input.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showDatePicker(this);
+            });
+        });
+        
+        // 绑定日期时间选择器
+        document.querySelectorAll('.datetime-input').forEach(input => {
+            input.style.cursor = 'pointer';
+            input.addEventListener('click', function(e) {
+                e.stopPropagation();
+                showDateTimePicker(this);
+            });
+        });
+        
+        // 日期选择器导航
+        document.getElementById('prevYear').addEventListener('click', function() {
+            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            renderCalendar(currentDate, 'datePickerDays');
+        });
+        document.getElementById('prevMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate, 'datePickerDays');
+        });
+        document.getElementById('nextMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate, 'datePickerDays');
+        });
+        document.getElementById('nextYear').addEventListener('click', function() {
+            currentDate.setFullYear(currentDate.getFullYear() + 1);
+            renderCalendar(currentDate, 'datePickerDays');
+        });
+        document.getElementById('cancelDate').addEventListener('click', hideDatePicker);
+        document.getElementById('confirmDate').addEventListener('click', function() {
+            if (activeInput && selectedDate) {
+                activeInput.value = formatDate(selectedDate);
+                activeInput.style.color = '#303133';
+            }
+            hideDatePicker();
+        });
+        
+        // 日期时间选择器导航
+        document.getElementById('dtPrevYear').addEventListener('click', function() {
+            currentDate.setFullYear(currentDate.getFullYear() - 1);
+            renderCalendar(currentDate, 'dtDatePickerDays');
+        });
+        document.getElementById('dtPrevMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            renderCalendar(currentDate, 'dtDatePickerDays');
+        });
+        document.getElementById('dtNextMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            renderCalendar(currentDate, 'dtDatePickerDays');
+        });
+        document.getElementById('dtNextYear').addEventListener('click', function() {
+            currentDate.setFullYear(currentDate.getFullYear() + 1);
+            renderCalendar(currentDate, 'dtDatePickerDays');
+        });
+        document.getElementById('dtCancelDate').addEventListener('click', hideDatePicker);
+        document.getElementById('dtConfirmDate').addEventListener('click', function() {
+            if (activeInput && selectedDate) {
+                activeInput.value = formatDateTime(selectedDate);
+                activeInput.style.color = '#303133';
+            }
+            hideDatePicker();
+        });
+        
+        document.addEventListener('click', function(e) {
+            const datePickers = [document.getElementById('elDatePicker'), document.getElementById('elDateTimePicker')];
+            const isPicker = datePickers.some(p => p && p.contains(e.target));
+            const isInput = e.target.closest('.wf-date-input') || e.target.closest('.date-input') || e.target.closest('.wf-input[placeholder*="日期"]') || e.target.closest('.datetime-input');
+            if (!isPicker && !isInput) {
+                hideDatePicker();
+            }
+        });
+        
+        // 滚动时隐藏选择器
+        window.addEventListener('scroll', hideDatePicker, true);
+        
+        // 上传图片弹窗逻辑
+        const uploadModalOverlay = document.getElementById('uploadModalOverlay');
+        const uploadDropzone = document.getElementById('uploadDropzone');
+        const uploadStartBtn = document.getElementById('uploadStartBtn');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const uploadProgressFill = document.getElementById('uploadProgressFill');
+        const uploadProgressText = document.getElementById('uploadProgressText');
+        let uploadFileSelected = false;
+        
+        function showUploadModal() {
+            uploadModalOverlay.classList.add('active');
+            uploadFileSelected = false;
+            uploadDropzone.classList.remove('has-file');
+            uploadDropzone.querySelector('.upload-text').textContent = '选择图片';
+            uploadStartBtn.classList.remove('active');
+            uploadStartBtn.disabled = true;
+            uploadProgress.style.display = 'none';
+            uploadProgressFill.style.width = '0%';
+            uploadProgressText.textContent = '0%';
+        }
+        
+        function hideUploadModal() {
+            uploadModalOverlay.classList.remove('active');
+        }
+        
+        // 点击上传按钮打开弹窗
+        document.querySelectorAll('.upload-btn').forEach(btn => {
+            btn.addEventListener('click', showUploadModal);
+        });
+        
+        // 关闭弹窗
+        document.getElementById('uploadModalClose').addEventListener('click', hideUploadModal);
+        document.getElementById('uploadModalCancel').addEventListener('click', hideUploadModal);
+        document.getElementById('uploadModalConfirm').addEventListener('click', hideUploadModal);
+        
+        // 点击遮罩层关闭
+        uploadModalOverlay.addEventListener('click', function(e) {
+            if (e.target === uploadModalOverlay) {
+                hideUploadModal();
+            }
+        });
+        
+        // 点击选择图片区域
+        uploadDropzone.addEventListener('click', function() {
+            uploadFileSelected = true;
+            uploadDropzone.classList.add('has-file');
+            uploadDropzone.querySelector('.upload-text').textContent = '已选择图片';
+            uploadStartBtn.classList.add('active');
+            uploadStartBtn.disabled = false;
+        });
+        
+        // 开始上传
+        uploadStartBtn.addEventListener('click', function() {
+            if (!uploadFileSelected) return;
+            uploadProgress.style.display = 'block';
+            let progress = 0;
+            const interval = setInterval(function() {
+                progress += Math.random() * 15;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    uploadProgressText.textContent = '上传完成';
+                    uploadProgressFill.style.background = '#52c41a';
+                } else {
+                    uploadProgressFill.style.width = progress + '%';
+                    uploadProgressText.textContent = Math.round(progress) + '%';
+                }
+            }, 200);
+        });
+        
+        // 封面选项单选框交互
+        document.querySelectorAll('.wf-cover-options').forEach(group => {
+            const options = group.querySelectorAll('.wf-cover-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    options.forEach(opt => opt.querySelector('.dot').classList.remove('checked'));
+                    this.querySelector('.dot').classList.add('checked');
+                });
+            });
+        });
+        
+        // 标签页切换交互
+        document.querySelectorAll('.wf-material-tabs').forEach(group => {
+            const tabs = group.querySelectorAll('.wf-material-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+        
+        // 侧边栏导航跳转
+        const navMap = {
+            '图文数据': 'sec-article-data',
+            '发布文章': 'sec-publish',
+            '内容列表': 'sec-content-list',
+            '素材管理': 'sec-material',
+            '粉丝管理': 'sec-fan-overview'
+        };
+        
+        document.querySelectorAll('.wf-sidebar-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const text = this.querySelector('span:last-child').textContent;
+                const targetId = navMap[text];
+                if (targetId) {
+                    const target = document.getElementById(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+        
+        // 滚动时高亮对应侧边栏菜单
+        const sections = document.querySelectorAll('.section[id]');
+        const sidebarItems = document.querySelectorAll('.wf-sidebar-item');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            const nameMap = {
+                'sec-article-data': '图文数据',
+                'sec-publish': '发布文章',
+                'sec-content-list': '内容列表',
+                'sec-material': '素材管理',
+                'sec-fan-overview': '粉丝管理'
+            };
+            
+            if (current && nameMap[current]) {
+                sidebarItems.forEach(item => {
+                    const text = item.querySelector('span:last-child').textContent;
+                    if (text === nameMap[current]) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+        });
+        
+        // 分页按钮点击交互
+        document.querySelectorAll('.wf-pagination').forEach(pagination => {
+            const btns = pagination.querySelectorAll('.wf-page-btn');
+            btns.forEach(btn => {
+                if (btn.textContent !== '<' && btn.textContent !== '>') {
+                    btn.addEventListener('click', function() {
+                        btns.forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                }
+            });
+        });
+        
+        // 状态筛选标签点击交互
+        document.querySelectorAll('.wf-status-filter').forEach(group => {
+            const items = group.querySelectorAll('.wf-status-item');
+            items.forEach(item => {
+                item.addEventListener('click', function() {
+                    items.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+        
+        // 快捷日期范围单选交互（今日/本周/近7天/近30天）
+        document.querySelectorAll('.wf-quick-date').forEach(group => {
+            const items = group.querySelectorAll('span');
+            items.forEach(item => {
+                item.addEventListener('click', function() {
+                    items.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+        
+        // 粉丝管理标签页单选交互（粉丝概况/粉丝画像/粉丝列表）
+        const fanTabMap = {
+            '粉丝概况': 'sec-fan-overview',
+            '粉丝画像': 'sec-fan-portrait',
+            '粉丝列表': 'sec-fan-list'
+        };
+        
+        document.querySelectorAll('.wf-fan-tabs').forEach(group => {
+            const tabs = group.querySelectorAll('.wf-fan-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    const text = this.textContent;
+                    const targetId = fanTabMap[text];
+                    if (targetId) {
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                });
+            });
+        });
+        
+        // 素材管理收藏/删除按钮交互
+        document.querySelectorAll('.wf-material-item .actions span').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent.includes('收藏')) {
+                    this.classList.toggle('fav-active');
+                    if (this.classList.contains('fav-active')) {
+                        this.textContent = this.textContent.replace('☆ 收藏', '★ 已收藏');
+                    } else {
+                        this.textContent = this.textContent.replace('★ 已收藏', '☆ 收藏');
+                    }
+                }
+            });
+        });
+        
+        // 编辑器交互：点击正文显示工具栏
+        const editorBody = document.getElementById('editorBody');
+        const editorToolbar = document.getElementById('editorToolbar');
+        const editorContent = document.getElementById('editorContent');
+        
+        if (editorBody && editorToolbar) {
+            editorBody.addEventListener('click', function() {
+                editorToolbar.classList.add('active');
+            });
+            
+            editorContent.addEventListener('click', function(e) {
+                if (e.target === editorContent || e.target.classList.contains('editor-title')) {
+                    editorToolbar.classList.add('active');
+                }
+            });
+        }
+        
+        // 素材库弹窗交互
+        const insertImageBtn = document.getElementById('insertImageBtn');
+        const modalOverlay = document.createElement('div');
+        modalOverlay.className = 'wf-modal-overlay';
+        modalOverlay.id = 'materialModal';
+        modalOverlay.innerHTML = `
+            <div class="wf-modal">
+                <div class="wf-modal-header">
+                    <div class="wf-modal-tabs">
+                        <div class="wf-modal-tab active" data-tab="material">素材库</div>
+                        <div class="wf-modal-tab" data-tab="upload">本地上传</div>
+                    </div>
+                </div>
+                <div class="wf-modal-body">
+                    <div class="wf-modal-sidebar">
+                        <div class="wf-modal-sidebar-item active" data-filter="all">全部</div>
+                        <div class="wf-modal-sidebar-item" data-filter="fav">收藏</div>
+                    </div>
+                    <div class="wf-modal-content" id="modalMaterialContent">
+                        <div class="wf-modal-grid">
+                            <div class="wf-modal-grid-item"><div class="placeholder-img">📷 图片获取失败</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">📷</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img">📷 图片获取失败</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">📷</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img"> 图片获取失败</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img"> 图片获取失败</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img">📷 图片获取失败</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">ORACLE</div><div class="check-circle"></div></div>
+                            <div class="wf-modal-grid-item"><div class="placeholder-img" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">MySQL</div><div class="check-circle"></div></div>
+                        </div>
+                    </div>
+                    <div class="wf-upload-area" id="modalUploadContent">
+                        <div class="wf-upload-box">
+                            <div class="upload-icon">📤</div>
+                            <div class="upload-text">点击或拖拽文件到此区域上传</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wf-modal-footer">
+                    <div class="wf-modal-pagination">
+                        <span>共 26 条</span>
+                        <select><option>10条/页</option><option>20条/页</option><option>50条/页</option></select>
+                        <span class="page-btn">&lt;</span>
+                        <span class="page-btn active">1</span>
+                        <span class="page-btn">2</span>
+                        <span class="page-btn">3</span>
+                        <span class="page-btn">&gt;</span>
+                        <span>前往</span>
+                        <input type="text" style="width: 40px; padding: 4px; border: 1px solid #d9d9d9; border-radius: 4px; text-align: center; font-size: 13px;" value="1">
+                        <span>页</span>
+                    </div>
+                    <div class="wf-modal-actions">
+                        <button class="wf-modal-btn" id="modalCancelBtn">取消</button>
+                        <button class="wf-modal-btn primary" id="modalConfirmBtn">确定</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalOverlay);
+        
+        // 确定按钮 - 将选中的图片插入到编辑器或设置为封面
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        const coverImageBox = document.getElementById('coverImageBox');
+        let modalOpenSource = 'editor'; // 记录弹窗是从哪里打开的
+        
+        if (insertImageBtn) {
+            insertImageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                modalOpenSource = 'editor';
+                modalOverlay.classList.add('active');
+            });
+        }
+        
+        // 封面选择图片按钮也打开弹窗
+        document.addEventListener('click', function(e) {
+            const coverBtn = e.target.closest('#coverImageBox');
+            if (coverBtn) {
+                e.preventDefault();
+                modalOpenSource = 'cover';
+                modalOverlay.classList.add('active');
+            }
+        });
+        
+        // 关闭弹窗
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        if (modalCancelBtn) {
+            modalCancelBtn.addEventListener('click', function() {
+                modalOverlay.classList.remove('active');
+            });
+        }
+        
+        // 点击遮罩关闭
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('active');
+            }
+        });
+        
+        // 页面滚动时关闭弹窗
+        window.addEventListener('scroll', function() {
+            if (modalOverlay.classList.contains('active')) {
+                modalOverlay.classList.remove('active');
+            }
+        }, true);
+        
+        // 弹窗内标签页切换
+        document.querySelectorAll('.wf-modal-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.wf-modal-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const tabName = this.dataset.tab;
+                const materialContent = document.getElementById('modalMaterialContent');
+                const uploadContent = document.getElementById('modalUploadContent');
+                const sidebar = document.querySelector('.wf-modal-sidebar');
+                const pagination = document.querySelector('.wf-modal-pagination');
+                
+                if (tabName === 'material') {
+                    materialContent.style.display = 'block';
+                    uploadContent.classList.remove('active');
+                    sidebar.style.display = 'block';
+                    pagination.style.display = 'flex';
+                } else {
+                    materialContent.style.display = 'none';
+                    uploadContent.classList.add('active');
+                    sidebar.style.display = 'none';
+                    pagination.style.display = 'none';
+                }
+            });
+        });
+        
+        // 弹窗内侧边栏筛选
+        document.querySelectorAll('.wf-modal-sidebar-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.wf-modal-sidebar-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        
+        // 弹窗内图片选择（单选用于封面，多选用于正文）
+        document.querySelectorAll('.wf-modal-grid-item').forEach(item => {
+            item.addEventListener('click', function() {
+                if (modalOpenSource === 'cover') {
+                    // 封面单选
+                    document.querySelectorAll('.wf-modal-grid-item').forEach(i => i.classList.remove('selected'));
+                    this.classList.add('selected');
+                } else {
+                    // 正文多选
+                    this.classList.toggle('selected');
+                }
+            });
+        });
+        
+        // 弹窗内分页按钮
+        document.querySelectorAll('.wf-modal-pagination .page-btn').forEach(btn => {
+            if (btn.textContent !== '<' && btn.textContent !== '>') {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.wf-modal-pagination .page-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            }
+        });
+        
+        if (modalConfirmBtn) {
+            modalConfirmBtn.addEventListener('click', function() {
+                const selectedItems = document.querySelectorAll('.wf-modal-grid-item.selected');
+                if (selectedItems.length > 0) {
+                    if (modalOpenSource === 'cover' && coverImageBox) {
+                        // 设置封面图片
+                        const placeholder = selectedItems[0].querySelector('.placeholder-img');
+                        const bgStyle = placeholder ? placeholder.getAttribute('style') : '';
+                        const textContent = placeholder ? placeholder.textContent : '';
+                        coverImageBox.innerHTML = `<div style="width: 100%; height: 120px; ${bgStyle} border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px;">${textContent}</div>`;
+                        coverImageBox.style.border = 'none';
+                        coverImageBox.style.padding = '0';
+                    } else if (editorBody) {
+                        // 插入到正文
+                        selectedItems.forEach(item => {
+                            const placeholder = item.querySelector('.placeholder-img');
+                            const bgStyle = placeholder ? placeholder.getAttribute('style') : '';
+                            const textContent = placeholder ? placeholder.textContent : '';
+                            const imgDiv = document.createElement('div');
+                            imgDiv.style.cssText = 'margin: 8px 0;';
+                            imgDiv.innerHTML = `<div style="width: 100%; height: 150px; ${bgStyle} border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px;">${textContent}</div>`;
+                            editorBody.appendChild(imgDiv);
+                        });
+                    }
+                }
+                modalOverlay.classList.remove('active');
+                document.querySelectorAll('.wf-modal-grid-item.selected').forEach(item => {
+                    item.classList.remove('selected');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
